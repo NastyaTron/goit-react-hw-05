@@ -1,19 +1,27 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { NavLink, Outlet, useParams } from "react-router-dom";
 import { getMovieById } from "../../movie-api";
 import MovieCard from "../../components/MovieCard/MovieCard";
+import Loader from "../../components/Loader/Loader";
+import ErrorMessage from "../../components/ErrorMessage/ErrorMessage";
 
 export default function MovieDetailsPage() {
   const { movieId } = useParams();
-  const [movie, setMovies] = useState(null);
+  const [movie, setMovie] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   useEffect(() => {
+    setLoading(true);
+    setError(false);
     async function fetchMovie() {
       try {
         const data = await getMovieById(movieId);
-        setMovies(data);
+        setMovie(data);
       } catch (error) {
-        console.log("Error");
+        setError(true);
+      } finally {
+        setLoading(false);
       }
     }
     fetchMovie();
@@ -21,8 +29,19 @@ export default function MovieDetailsPage() {
 
   return (
     <div>
-      <h2>MovieDetailsPage</h2>
-      {movie && <MovieCard {...movie} />}
+      {movie && <MovieCard item={movie} />}
+      {loading && <Loader />}
+      {error && <ErrorMessage />}
+      <ul>
+        <li>
+          <NavLink to="cast">Cast</NavLink>
+        </li>
+        <li>
+          <NavLink to="reviews">Reviews</NavLink>
+        </li>
+      </ul>
+
+      <Outlet />
     </div>
   );
 }
