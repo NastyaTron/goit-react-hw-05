@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import MovieCastList from "../MovieCastList/MovieCastList";
 import Loader from "../Loader/Loader";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
+import css from "./MovieCast.module.css";
 
 export default function MovieCast() {
   const [cast, setCast] = useState([]);
@@ -12,6 +13,7 @@ export default function MovieCast() {
 
   const { movieId } = useParams();
   useEffect(() => {
+    if (!movieId) return;
     setLoading(true);
     setError(false);
     async function fetchCast() {
@@ -28,9 +30,12 @@ export default function MovieCast() {
   }, [movieId]);
   return (
     <div>
-      <MovieCastList items={cast} />
       {loading && <Loader />}
       {error && <ErrorMessage />}
+      {!loading && !error && cast.length === 0 && (
+        <p className={css.text}>There are no cast for this movie.</p>
+      )}
+      {!loading && !error && cast.length > 0 && <MovieCastList items={cast} />}
     </div>
   );
 }

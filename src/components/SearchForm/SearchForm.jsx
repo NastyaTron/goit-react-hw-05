@@ -1,4 +1,5 @@
 import { useState } from "react";
+import css from "./SearchForm.module.css";
 
 export default function SearchForm({ onSubmit }) {
   const [movie, setMovie] = useState("");
@@ -16,9 +17,10 @@ export default function SearchForm({ onSubmit }) {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className={css.form}>
       <label>
         <input
+          className={css.input}
           type="text"
           name="name"
           required
@@ -27,7 +29,9 @@ export default function SearchForm({ onSubmit }) {
           onChange={onChange}
         />
       </label>
-      <button type="submit">Search</button>
+      <button className={css.button} type="submit">
+        Search
+      </button>
     </form>
   );
 }

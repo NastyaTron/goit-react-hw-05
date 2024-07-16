@@ -1,0 +1,19 @@
+.container {
+  margin: 20px;
+}
+.link {
+  font-size: 18px;
+  color: #4569ba;
+  margin-left: 20px;
+  transition: text-decoration 0.3s;
+}
+.link:hover {
+  text-decoration: none;
+}
+.movieList {
+  list-style-type: none;
+  display: flex;
+  flex-direction: row;
+  gap: 36px;
+  justify-content: space-evenly;
+}

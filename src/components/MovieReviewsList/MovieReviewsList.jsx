@@ -1,13 +1,14 @@
+import css from "./MovieReviewsList.module.css";
 export default function MovieReviewsList({ reviews }) {
   return (
-    <div>
+    <ul className={css.list}>
       {reviews.map((review) => (
-        <div key={review.id}>
-          <h2>{review.author}</h2>
-          <p>Rating: {review.author_details.rating}</p>
-          <p>{review.content}</p>
-        </div>
+        <li className={css.item} key={review.id}>
+          <h3 className={css.title}>{review.author}</h3>
+          <p className={css.rating}>Rating: {review.author_details.rating}</p>
+          <p className={css.text}>{review.content}</p>
+        </li>
       ))}
-    </div>
+    </ul>
   );
 }

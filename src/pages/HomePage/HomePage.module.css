@@ -1,0 +1,10 @@
+.container {
+  padding: 20px;
+}
+
+.movieTitle {
+  font-size: 36px;
+  margin: 0 0 10px;
+  color: #755f72;
+  margin-bottom: 12px;
+}

@@ -1,12 +1,21 @@
-import { useEffect, useState } from "react";
-import { NavLink, Outlet, useParams } from "react-router-dom";
+import { Suspense, useEffect, useRef, useState } from "react";
+import {
+  Link,
+  NavLink,
+  Outlet,
+  useLocation,
+  useParams,
+} from "react-router-dom";
 import { getMovieById } from "../../movie-api";
 import MovieCard from "../../components/MovieCard/MovieCard";
 import Loader from "../../components/Loader/Loader";
 import ErrorMessage from "../../components/ErrorMessage/ErrorMessage";
+import css from "./MovieDetalisPage.module.css";
 
 export default function MovieDetailsPage() {
   const { movieId } = useParams();
+  const location = useLocation();
+  const backLinkRef = useRef(location.state ?? "/movies");
   const [movie, setMovie] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -28,20 +37,30 @@ export default function MovieDetailsPage() {
   }, [movieId]);
 
   return (
-    <div>
-      {movie && <MovieCard item={movie} />}
+    <div className={css.container}>
+      <Link className={css.link} to={backLinkRef.current}>
+        Go back
+      </Link>
       {loading && <Loader />}
       {error && <ErrorMessage />}
-      <ul>
-        <li>
-          <NavLink to="cast">Cast</NavLink>
-        </li>
-        <li>
-          <NavLink to="reviews">Reviews</NavLink>
-        </li>
-      </ul>
-
-      <Outlet />
+      {movie && <MovieCard item={movie} />}
+      {!loading && (
+        <ul className={css.movieList}>
+          <li>
+            <NavLink to="cast" className={css.link}>
+              Cast
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="reviews" className={css.link}>
+              Reviews
+            </NavLink>
+          </li>
+        </ul>
+      )}
+      <Suspense fallback={<p>Loading details...</p>}>
+        <Outlet />
+      </Suspense>
     </div>
   );
 }

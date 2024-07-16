@@ -4,6 +4,7 @@ import { getMovieReviews } from "../../movie-api";
 import MovieReviewsList from "../MovieReviewsList/MovieReviewsList";
 import Loader from "../Loader/Loader";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
+import css from "./MovieReviews.module.css";
 
 export default function MovieReviews() {
   const [reviews, setReviews] = useState([]);
@@ -12,6 +13,7 @@ export default function MovieReviews() {
 
   const { movieId } = useParams();
   useEffect(() => {
+    if (!movieId) return;
     setLoading(true);
     setError(false);
     async function fetchReviews() {
@@ -28,9 +30,14 @@ export default function MovieReviews() {
   }, [movieId]);
   return (
     <div>
-      <MovieReviewsList reviews={reviews} />
       {loading && <Loader />}
       {error && <ErrorMessage />}
+      {!loading && !error && reviews.length === 0 && (
+        <p className={css.text}>There are no reviews for this movie.</p>
+      )}
+      {!loading && !error && reviews.length > 0 && (
+        <MovieReviewsList reviews={reviews} />
+      )}
     </div>
   );
 }

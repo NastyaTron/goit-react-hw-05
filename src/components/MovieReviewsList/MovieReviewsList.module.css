@@ -1,0 +1,27 @@
+.list {
+  list-style-type: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  gap: 12px;
+}
+.item {
+  flex-basis: calc((100% - 3 * 24px) / 2);
+  box-sizing: border-box;
+}
+.title {
+  font-size: 20px;
+  margin: 0;
+  color: #333;
+}
+.text {
+  font-size: 14px;
+  color: #666;
+  margin: 0;
+}
+.rating {
+  font-size: 20px;
+  margin: 0;
+  color: #333;
+}

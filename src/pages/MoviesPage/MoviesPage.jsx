@@ -2,7 +2,7 @@ import { useSearchParams } from "react-router-dom";
 import SearchForm from "../../components/SearchForm/SearchForm";
 import { useEffect, useState } from "react";
 import { getMovies } from "../../movie-api";
-import MovieLinkList from "../../components/MovieLinkList/MovieLinkList";
+import MovieList from "../../components/MovieList/MovieList";
 import Loader from "../../components/Loader/Loader";
 import ErrorMessage from "../../components/ErrorMessage/ErrorMessage";
 
@@ -39,7 +39,7 @@ export default function MoviesPage() {
       <SearchForm onSubmit={onSubmit} />
       {loading && <Loader />}
       {error && <ErrorMessage />}
-      <MovieLinkList items={movies} />
+      <MovieList items={movies} />
     </div>
   );
 }
